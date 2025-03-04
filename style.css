@@ -1,0 +1,474 @@
+:root {
+  --md-memory-primary: #6750a4;
+  --md-memory-primary-container: #eaddff;
+  --md-memory-on-primary: #ffffff;
+  --md-memory-on-primary-container: #21005e;
+  --md-memory-secondary: #625b71;
+  --md-memory-secondary-container: #e8def8;
+  --md-memory-on-secondary: #ffffff;
+  --md-memory-on-secondary-container: #1e192b;
+  --md-memory-tertiary: #7d5260;
+  --md-memory-tertiary-container: #ffd8e4;
+  --md-memory-on-tertiary: #ffffff;
+  --md-memory-on-tertiary-container: #370b1e;
+  --md-memory-success: #386a20;
+  --md-memory-success-container: #b6f397;
+  --md-memory-on-success: #ffffff;
+  --md-memory-on-success-container: #042100;
+  --md-memory-warning: #825500;
+  --md-memory-warning-container: #ffddb4;
+  --md-memory-on-warning: #ffffff;
+  --md-memory-on-warning-container: #2a1800;
+  --md-memory-surface: #fffbff;
+  --md-memory-surface-variant: #e7e0eb;
+  --md-memory-on-surface: #1c1b1f;
+  --md-memory-on-surface-variant: #49454e;
+  --md-memory-outline: #79747e;
+  --md-memory-outline-variant: #c4c7cf;
+  --md-memory-overlay-light: rgba(255, 255, 255, 0.5);
+  --md-memory-overlay-dark: rgba(0, 0, 0, 0.5);
+  --md-memory-shadow: rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", system-ui, sans-serif;
+  background-color: var(--md-memory-surface);
+  color: var(--md-memory-on-surface);
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+.body-overlay {
+  position: relative;
+}
+
+.body-overlay::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--md-memory-overlay-dark);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1040;
+}
+
+.body-overlay.modal-open::before {
+  opacity: 1;
+}
+
+/* Modal Styles */
+.modal {
+  z-index: 1050;
+}
+
+.modal-backdrop {
+  z-index: 1045;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#settingsModal,
+#historyModal,
+#victoryModal {
+  z-index: 1060;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#settingsModal .modal-content {
+  background-color: #fff;
+  border-radius: 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+canvas {
+  z-index: 9999 !important;
+  pointer-events: none;
+  position: fixed !important;
+  opacity: 1 !important;
+}
+
+.dim-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 1;
+  z-index: 1059;
+  pointer-events: none;
+  border-radius: 28px;
+}
+
+.modal-content {
+  border-radius: 28px;
+  border: none;
+  box-shadow: 0 8px 24px var(--md-memory-shadow);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--md-memory-outline-variant);
+  padding: 20px 24px;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-footer {
+  border-top: 1px solid var(--md-memory-outline-variant);
+  padding: 16px 24px;
+}
+
+/* Timer Styles */
+.timer-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.timer-display {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--md-memory-primary);
+  margin: 0;
+  padding: 0.25rem 1rem;
+  border-radius: 16px;
+  background-color: var(--md-memory-primary-container);
+  min-width: 100px;
+  text-align: center;
+}
+
+/* Game Board */
+.game-container {
+  position: relative;
+  background-color: var(--md-memory-surface);
+  background-image: url(./media/background.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 28px;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  padding: 24px;
+  box-shadow: 0 4px 8px var(--md-memory-shadow);
+  transition: filter 0.3s ease;
+}
+
+.game-board {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  justify-items: center;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+/* Grid Layouts */
+.grid-3x3 .memory-card {
+  max-width: 140px;
+}
+
+.grid-4x4 .memory-card {
+  max-width: 140px;
+}
+
+.grid-5x5 .memory-card {
+  max-width: 130px;
+}
+.grid-3x3 {
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 700px;
+}
+
+.grid-4x4 {
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 800px;
+}
+
+.grid-5x5 {
+  grid-template-columns: repeat(6, 1fr);
+  max-width: 900px;
+}
+/* Card Styles */
+.memory-card {
+  aspect-ratio: 3/4;
+  width: 100%;
+  max-width: 120px;
+  perspective: 1000px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.cards-disabled {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px var(--md-memory-shadow);
+}
+
+.memory-card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--md-memory-surface);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Button Styles */
+.btn {
+  border-radius: 20px;
+  padding: 8px 24px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn .material-icons {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.btn-primary {
+  background-color: #6750a4;
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background-color: #625b71;
+  color: #ffffff;
+}
+
+.btn-info {
+  background-color: #4682b4;
+  color: #ffffff;
+}
+
+.btn-warning {
+  background-color: #825500;
+  color: #ffffff;
+}
+
+.btn-success {
+  background-color: #386a20;
+  color: #ffffff;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px var(--md-memory-shadow);
+}
+
+/* Ripple Effect */
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: var(--md-memory-overlay-light);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Animations */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Card States */
+.memory-card.matched .card-inner {
+  box-shadow: 0 0 8px var(--md-memory-success-container);
+}
+
+.memory-card.wrong .card-inner {
+  box-shadow: 0 0 8px #ff4444;
+}
+
+/* Table Styles */
+.table {
+  margin-bottom: 0;
+}
+
+.table th {
+  color: var(--md-memory-on-surface-variant);
+  font-weight: 500;
+  border-bottom: 2px solid var(--md-memory-outline-variant);
+  padding: 12px 16px;
+}
+
+.table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--md-memory-outline-variant);
+  vertical-align: middle;
+}
+
+/* Form Controls */
+.form-select {
+  border-radius: 12px;
+  border: 1px solid var(--md-memory-outline);
+  padding: 8px 16px;
+  transition: border-color 0.2s ease;
+}
+
+.form-select:focus {
+  border-color: var(--md-memory-primary);
+  box-shadow: 0 0 0 2px var(--md-memory-primary-container);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .memory-card {
+    max-width: 100px;
+  }
+
+  .game-board {
+    gap: 12px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .memory-card {
+    max-width: 80px;
+  }
+
+  .grid-3x3 .memory-card {
+    max-width: 100px;
+  }
+
+  .grid-4x4 .memory-card {
+    max-width: 80px;
+  }
+
+  .grid-5x5 .memory-card {
+    max-width: 65px;
+  }
+
+  .game-board {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .btn {
+    padding: 6px 16px;
+    font-size: 0.875rem;
+  }
+
+  .timer-display {
+    font-size: 1.25rem;
+  }
+
+  .modal-dialog {
+    margin: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .game-board {
+    gap: 8px;
+    padding: 12px;
+  }
+  .memory-card {
+    max-width: 60px;
+  }
+
+  .game-container {
+    padding: 12px;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+
+  .game-controls .row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .game-controls .col-auto {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .timer-display {
+    min-width: 80px;
+    font-size: 1rem;
+  }
+
+  .grid-3x3 .memory-card {
+    max-width: 80px;
+  }
+
+  .grid-4x4 .memory-card {
+    max-width: 65px;
+  }
+
+  .grid-5x5 .memory-card {
+    max-width: 50px;
+  }
+}

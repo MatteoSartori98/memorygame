@@ -38,7 +38,7 @@
 
 body {
   font-family: "Roboto", system-ui, sans-serif;
-  background-color: var(--md-memory-surface);
+  background-color: rgba(0, 0, 0, 0.8);
   color: var(--md-memory-on-surface);
   min-height: 100vh;
   transition: background-color 0.3s ease;
@@ -118,7 +118,10 @@ canvas {
 
 .modal-header {
   border-bottom: 1px solid var(--md-memory-outline-variant);
+  background-color: var(--md-memory-surface);
   padding: 20px 24px;
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
 }
 
 .modal-body {

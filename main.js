@@ -30,10 +30,10 @@ const gameState = {
 
 document.addEventListener("DOMContentLoaded", () => {
   const modals = {
-    gameModal: new bootstrap.Modal(document.getElementById("gameModal"), {
-      backdrop: "static",
-      keyboard: false,
-    }),
+    // gameModal: new bootstrap.Modal(document.getElementById("gameModal"), {
+    //   backdrop: "static",
+    //   keyboard: false,
+    // }),
     settingsModal: new bootstrap.Modal(document.getElementById("settingsModal"), {
       backdrop: "static",
       keyboard: false,
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     historyTableBody: document.getElementById("historyTableBody"),
     gameMode: document.getElementById("gameMode"),
     timerDisplay: document.getElementById("timerDisplay"),
-    gameModal: document.getElementById("gameModal"),
+    // gameModal: document.getElementById("gameModal"),
     settingsModal: document.getElementById("settingsModal"),
     historyModal: document.getElementById("historyModal"),
     victoryModal: document.getElementById("victoryModal"),
@@ -86,31 +86,24 @@ document.addEventListener("DOMContentLoaded", () => {
   function handleFirstLaunch() {
     if (gameState.isFirstLaunch) {
       localStorage.setItem("hasLaunched", "true");
-      modals.gameModal.show();
+      // modals.gameModal.show();
       setTimeout(() => {
         modals.settingsModal.show();
         document.body.classList.add("modal-open");
-        elements.gameModal.classList.add("dim-background");
+        // elements.gameModal.classList.add("dim-background");
       }, 150);
     }
-
-    elements.playGameBtn.addEventListener("click", () => {
-      modals.gameModal.show();
-      modals.settingsModal.show();
-
-      resetGame();
-    });
   }
 
   function setupEventListeners() {
     elements.settingsModal.addEventListener("show.bs.modal", () => {
       document.body.classList.add("modal-open");
-      elements.gameModal.classList.add("dim-background");
+      // elements.gameModal.classList.add("dim-background");
     });
 
     elements.settingsModal.addEventListener("hidden.bs.modal", () => {
       document.body.classList.remove("modal-open");
-      elements.gameModal.classList.remove("dim-background");
+      // elements.gameModal.classList.remove("dim-background");
     });
 
     elements.settingsBtn.addEventListener("click", () => {
